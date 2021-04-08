@@ -1,6 +1,6 @@
 # scores
 
-![statement](statement.png)
+![statement](assets/statement.png)
 
 [Les vidéos](https://www.youtube.com/playlist?list=PLg9HTCEtaWMgIznz_wuq2VNygSAa69c0D)
 
