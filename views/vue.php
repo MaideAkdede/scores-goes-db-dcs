@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Premier League 2020</title>
@@ -12,12 +12,12 @@
         <thead>
         <tr>
             <td></td>
-            <th scope="col">Team</th>
-            <th scope="col">Games</th>
+            <th scope="col">Équipes</th>
+            <th scope="col">Matchs</th>
             <th scope="col">Points</th>
-            <th scope="col">Wins</th>
-            <th scope="col">Losses</th>
-            <th scope="col">Draws</th>
+            <th scope="col">Victoires</th>
+            <th scope="col">Défaites</th>
+            <th scope="col">Match Nul</th>
             <th scope="col">GF</th>
             <th scope="col">GA</th>
             <th scope="col">GD</th>
@@ -100,17 +100,17 @@
     </table>
 </section>
 <section>
-    <h2>Games played at april 2nd, 2020</h2>
+    <h2>Matchs joués le <?= TODAY ?></h2>
     <table>
         <thead>
         <tr>
-            <th>Date</th><th>Home Team</th><th>Home Team Goals</th><th>Away Team Goals</th><th>Away Team</th>
+            <th>Date</th><th>Équipe Locale</th><th>Goals Équipe Locale</th><th>Goals Équipe Adverse</th><th>Équipe Adverse</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach($matches as $match): ?>
         <tr>
-            <td><?= $match['match-date'] ?></td>
+            <td><?= (new DateTime($match['match-date']))->format('j-m-Y') ?></td>
             <td><?= $match['home-team'] ?></td>
             <td><?= $match['home-team-goals'] ?></td>
             <td><?= $match['away-team-goals'] ?></td>
