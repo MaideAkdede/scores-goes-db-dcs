@@ -12,90 +12,33 @@
         <thead>
         <tr>
             <td></td>
-            <th scope="col">Équipes</th>
+            <th scope="col">Équipe</th>
             <th scope="col">Matchs</th>
             <th scope="col">Points</th>
             <th scope="col">Victoires</th>
             <th scope="col">Défaites</th>
             <th scope="col">Match Nul</th>
-            <th scope="col">GF</th>
-            <th scope="col">GA</th>
-            <th scope="col">GD</th>
+            <th scope="col"><abbr title="Goals en Faveur">GF</abbr></th>
+            <th scope="col"><abbr title="Goals Adverses/contres">GA</abbr></th>
+            <th scope="col"><abbr title="Différences de Goal">GD</abbr></th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <th scope="row">Liverpool</th>
-            <td>4</td>
-            <td>12</td>
-            <td>4</td>
-            <td>0</td>
-            <td>0</td>
-            <td>10</td>
-            <td>0</td>
-            <td>10</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <th scope="row">Manchester City</th>
-            <td>4</td>
-            <td>10</td>
-            <td>3</td>
-            <td>0</td>
-            <td>1</td>
-            <td>12</td>
-            <td>4</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <th scope="row">Chelsea</th>
-            <td>4</td>
-            <td>8</td>
-            <td>2</td>
-            <td>0</td>
-            <td>2</td>
-            <td>9</td>
-            <td>5</td>
-            <td>4</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <th scope="row">Tottenham</th>
-            <td>4</td>
-            <td>7</td>
-            <td>2</td>
-            <td>1</td>
-            <td>1</td>
-            <td>7</td>
-            <td>7</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <th scope="row">Manchester United</th>
-            <td>4</td>
-            <td>2</td>
-            <td>1</td>
-            <td>2</td>
-            <td>1</td>
-            <td>2</td>
-            <td>6</td>
-            <td>-4</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <th scope="row">Arsenal</th>
-            <td>4</td>
-            <td>0</td>
-            <td>0</td>
-            <td>4</td>
-            <td>0</td>
-            <td>2</td>
-            <td>12</td>
-            <td>-10</td>
-        </tr>
+        <?php $i= 1; ?>
+        <?php foreach ($standings as $team => $teamStats): ?>
+            <tr>
+                <td><?= $i++ ?></td>
+                <th scope="row"><?= $team ?></th>
+                <td><?= $teamStats['games'] ?></td>
+                <td><?= $teamStats['points'] ?></td>
+                <td><?= $teamStats['wins'] ?></td>
+                <td><?= $teamStats['losses'] ?></td>
+                <td><?= $teamStats['draws'] ?></td>
+                <td><?= $teamStats['GF'] ?></td>
+                <td><?= $teamStats['GA'] ?></td>
+                <td><?= $teamStats['GD'] ?></td>
+            </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
 </section>
@@ -104,19 +47,23 @@
     <table>
         <thead>
         <tr>
-            <th>Date</th><th>Équipe Locale</th><th>Goals Équipe Locale</th><th>Goals Équipe Adverse</th><th>Équipe Adverse</th>
+            <th>Date</th>
+            <th>Équipe Locale</th>
+            <th>Goals Équipe Locale</th>
+            <th>Goals Équipe Adverse</th>
+            <th>Équipe Adverse</th>
         </tr>
         </thead>
         <tbody>
-        <?php foreach($matches as $match): ?>
-        <tr>
-            <td><?= (new DateTime($match['match-date']))->format('j-m-Y') ?></td>
-            <td><?= $match['home-team'] ?></td>
-            <td><?= $match['home-team-goals'] ?></td>
-            <td><?= $match['away-team-goals'] ?></td>
-            <td><?= $match['away-team'] ?></td>
-        </tr>
-        <?php endforeach;?>
+        <?php foreach ($matches as $match): ?>
+            <tr>
+                <td><?= (new DateTime($match['match-date']))->format('j-m-Y') ?></td>
+                <td><?= $match['home-team'] ?></td>
+                <td><?= $match['home-team-goals'] ?></td>
+                <td><?= $match['away-team-goals'] ?></td>
+                <td><?= $match['away-team'] ?></td>
+            </tr>
+        <?php endforeach; ?>
 
         </tbody>
     </table>
