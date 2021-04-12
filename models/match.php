@@ -24,7 +24,7 @@ function allWithTeams(\PDO $connection): array
     $matchesInfosRequest = 'SELECT * 
                             FROM matches 
                             JOIN participations p ON matches.id = p.match_id
-                            JOIN teams t ON p.teams_id = t.id
+                            JOIN teams t ON p.team_id = t.id
                             ORDER BY matches.id';
     $pdoSt = $connection->query($matchesInfosRequest);
 
