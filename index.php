@@ -1,9 +1,18 @@
 <?php
+
+use function Team\all as teamAll;
+use function Match\all as matchAll;
+
 include('configs/config.php');
+include('utils/dbaccess.php');
+include('models/team.php');
+include('models/match.php');
+
+$pdo = getConnection();
 
 $matches = [];
 $standings = [];
-$teams = [];
+$teams = teamAll($pdo);
 $handle = fopen(FILE_PATH, 'r');
 $header = fgetcsv($handle, 1000);
 
@@ -67,7 +76,4 @@ uasort($standings, function ($homeTeam, $awayTeam) {
     }
     return $homeTeam['points'] > $awayTeam['points'] ? -1 : 1;
 });
-
-$teams = array_keys($standings);
-
 require('views/vue.php');
