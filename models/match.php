@@ -19,7 +19,7 @@ function find(\PDO $connection, string $id): \stdClass
     return $pdoSt->fetch();
 }
 
-function allWithTeams(PDO $connection): array
+function allWithTeams(\PDO $connection): array
 {
     $matchesInfosRequest = 'SELECT * 
                             FROM matches 
