@@ -1,4 +1,5 @@
 <?php
+
 namespace Match;
 
 function all(\PDO $connection): array
@@ -29,4 +30,25 @@ function allWithTeams(\PDO $connection): array
     $pdoSt = $connection->query($matchesInfosRequest);
 
     return $pdoSt->fetchAll();
+}
+
+function allMatchesWithTeamsGrouped(array $allWithTeams): array
+{
+    $matchesWithTeams = [];
+    $m = null;
+    foreach($allWithTeams as $match){
+        if($match->is_home){
+            $m = new \stdClass();
+            $d = new \DateTime();
+            $d->setTimestamp(((int) $match->date) / 1000);
+            $m->match_date = $d;
+            $m->away_team = $match->name;
+            $m->away_team_goals = $match->goals;
+        } else {
+            $m->home_team = $match->name;
+            $m->home_team_goals = $match->goals;
+            $matchesWithTeams[] = $m;
+        }
+    }
+    return $matchesWithTeams;
 }

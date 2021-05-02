@@ -55,13 +55,13 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($matches as $match): ?>
+        <?php foreach ($matches2 as $match): ?>
             <tr>
-                <td><?= (new DateTime($match['match-date']))->format('j-m-Y') ?></td>
-                <td><?= $match['home-team'] ?></td>
-                <td><?= $match['home-team-goals'] ?></td>
-                <td><?= $match['away-team-goals'] ?></td>
-                <td><?= $match['away-team'] ?></td>
+                <td><?= ($match->match_date)->format('j-m-Y') ?></td>
+                <td><?= $match->home_team; ?></td>
+                <td><?= $match->home_team_goals; ?></td>
+                <td><?= $match->away_team_goals; ?></td>
+                <td><?= $match->away_team; ?></td>
             </tr>
         <?php endforeach; ?>
 

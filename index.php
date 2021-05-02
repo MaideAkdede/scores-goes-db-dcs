@@ -1,7 +1,8 @@
 <?php
 
 use function Team\all as teamAll;
-use function Match\all as matchAll;
+use function Match\allWithTeams as allMatchesWithTeams;
+use function Match\allMatchesWithTeamsGrouped as allMatchesWithTeamsGrouped;
 
 include('configs/config.php');
 include('utils/dbaccess.php');
@@ -10,9 +11,9 @@ include('models/match.php');
 
 $pdo = getConnection();
 
-$matches = [];
-$standings = [];
+$matches2 =  allMatchesWithTeamsGrouped(allMatchesWithTeams($pdo));
 $teams = teamAll($pdo);
+$standings = [];
 $handle = fopen(FILE_PATH, 'r');
 $header = fgetcsv($handle, 1000);
 
