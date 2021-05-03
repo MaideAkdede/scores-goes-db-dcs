@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>Premier League 2020</h1>
+<?php if(count($matches2)) : ?>
 <section>
     <h2>Standings</h2>
     <table>
@@ -42,8 +43,11 @@
         </tbody>
     </table>
 </section>
+<?php endif; ?>
+
 <section>
     <h2>Matchs joués le <?= TODAY ?></h2>
+    <?php if(count($matches2)) : ?>
     <table>
         <thead>
         <tr>
@@ -67,6 +71,10 @@
 
         </tbody>
     </table>
+    <?php else: ?>
+    <p>Aucun match n'a été joué à ce jour</p>
+    <?php endif; ?>
+
 </section>
 <section>
     <h2>Encodage d’un nouveau match</h2>
@@ -81,10 +89,10 @@
             <?php endforeach; ?>
         </select>
         <label for="home-team-unlisted">Équipe non listée&nbsp;?</label>
-        <input type="text" name="home-team-unlisted" id="home-team-unlisted">
+        <input type="text" name="home-team-unlisted" id="home-team-unlisted" placeholder="Nouvelle équipe">
         <br>
         <label for="home-team-goals">Goals de l’équipe à domicile</label>
-        <input type="text" id="home-team-goals" name="home-team-goals">
+        <input type="text" id="home-team-goals" name="home-team-goals" placeholder="0">
         <br>
         <label for="away-team">Équipe visiteuse</label>
         <select name="away-team" id="away-team">
@@ -93,10 +101,10 @@
             <?php endforeach; ?>
         </select>
         <label for="away-team-unlisted">Équipe non listée&nbsp;?</label>
-        <input type="text" name="away-team-unlisted" id="away-team-unlisted">
+        <input type="text" name="away-team-unlisted" id="away-team-unlisted" placeholder="Nouvelle équipe">
         <br>
         <label for="away-team-goals">Goals de l’équipe visiteuse</label>
-        <input type="text" id="away-team-goals" name="away-team-goals">
+        <input type="text" id="away-team-goals" name="away-team-goals" placeholder="0">
         <br>
         <input type="submit" value="Ajouter ce match">
         <input type="hidden" name="action" value="store">

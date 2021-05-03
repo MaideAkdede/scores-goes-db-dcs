@@ -4,6 +4,8 @@ use function Match\allWithTeams as allMatchesWithTeams;
 use function Match\allMatchesWithTeamsGrouped as allMatchesWithTeamsGrouped;
 use function Match\save as saveMatch;
 
+require('vendor/autoload.php');
+
 require('configs/config.php');
 require('utils/dbaccess.php');
 require('utils/standings.php');
