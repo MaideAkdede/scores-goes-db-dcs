@@ -3,25 +3,28 @@ use function Models\Team\all as teamAll;
 use function Models\Match\allWithTeams as allMatchesWithTeams;
 use function Models\Match\allMatchesWithTeamsGrouped as allMatchesWithTeamsGrouped;
 use function Controllers\Match\store as storeMatch;
+use function Controllers\Team\store as storeTeam;
 
 require('vendor/autoload.php');
 
 require('configs/config.php');
 require('utils/dbaccess.php');
 require('utils/standings.php');
+
 require('models/team.php');
 require('models/match.php');
 require('controllers/match.php');
+require('controllers/team.php');
 
 $pdo = getConnection();
-
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Traiter les trucs en POST
     if (isset($_POST['action']) && isset($_POST['resource'])) {
         if ($_POST['action'] === 'store' && $_POST['resource'] === 'match') {
             storeMatch($pdo);
+        }elseif($_POST['action'] === 'store' && $_POST['resource'] === 'team'){
+            storeTeam($pdo);
         }
     }
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
