@@ -36,11 +36,11 @@ function allMatchesWithTeamsGrouped(array $allWithTeams): array
 {
     $matchesWithTeams = [];
     $m = null;
-    foreach($allWithTeams as $match){
-        if($match->is_home){
+    foreach ($allWithTeams as $match) {
+        if ($match->is_home) {
             $m = new \stdClass();
             $d = new \DateTime();
-            $d->setTimestamp(((int) $match->date) / 1000);
+            $d->setTimestamp(((int)$match->date) / 1000);
             $m->match_date = $d;
             $m->away_team = $match->name;
             $m->away_team_goals = $match->goals;
@@ -51,4 +51,27 @@ function allMatchesWithTeamsGrouped(array $allWithTeams): array
         }
     }
     return $matchesWithTeams;
+}
+
+function save(\PDO $connection, array $match)
+{
+    $insertMatchRequest = 'INSERT INTO matches(`date`, `slug`) VALUES (:date, :slug)';
+    $pdoSt = $connection->prepare($insertMatchRequest);
+    $pdoSt->execute([':date' => $match['date'], ':slug' => '']);
+    $id = $connection->lastInsertId();
+
+    $insertParticipationRequest = 'INSERT INTO participations(`match_id`, `team_id`, `goals`, `is_home`) VALUES (:match_id, :team_id, :goals, :is_home)';
+    $pdoSt = $connection->prepare($insertParticipationRequest);
+    $pdoSt->execute([
+        ':match_id' => $id,
+        ':team_id' => $match['home-team'],
+        ':goals' => $match['home-team-goals'],
+        ':is_home' => 1
+    ]);
+    $pdoSt->execute([
+        ':match_id' => $id,
+        ':team_id' => $match['away-team'],
+        ':goals' => $match['away-team-goals'],
+        ':is_home' => 0
+    ]);
 }

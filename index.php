@@ -2,6 +2,7 @@
 use function Team\all as teamAll;
 use function Match\allWithTeams as allMatchesWithTeams;
 use function Match\allMatchesWithTeamsGrouped as allMatchesWithTeamsGrouped;
+use function Match\save as saveMatch;
 
 require('configs/config.php');
 require('utils/dbaccess.php');
@@ -14,25 +15,34 @@ $pdo = getConnection();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Traiter les trucs en POST
     if (isset($_POST['action']) && isset($_POST['resource'])) {
+
         if ($_POST['action'] === 'store' && $_POST['resource'] === 'match') {
 
             $matchDate = $_POST['match-date'] ?: FORMAT_DATE;
-            $homeTeam = $_POST['home-team-unlisted'] === '' ? $_POST['home-team'] : $_POST['home-team-unlisted'];
-            $awayTeam = $_POST['away-team-unlisted'] === '' ? $_POST['away-team'] : $_POST['away-team-unlisted'];
-            $homeTeamGoals = $_POST['home-team-goals'] ?: 0;
-            $awayTeamGoals = $_POST['away-team-goals'] ?: 0;
+            $homeTeam = $_POST['home-team'];
+            $awayTeam = $_POST['away-team'];
+            $homeTeamGoals = $_POST['home-team-goals'] ?: "0";
+            $awayTeamGoals = $_POST['away-team-goals'] ?: "0";
 
-            $match = [$matchDate, $homeTeam, $homeTeamGoals, $awayTeamGoals, $awayTeam];
-
-            //TODO : ajouter données entrées dans la DB
+            $match = [
+                'date' => $matchDate,
+                'home-team' => $homeTeam,
+                'home-team-goals' => $homeTeamGoals,
+                'away-team-goals' => $awayTeamGoals,
+                'away-team' => $awayTeam
+            ];
+            //savematch et rediriger si save
+            saveMatch($pdo, $match);
+            header('Location: index.php');
+            exit();
         }
-
     }
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Traiter les trucs en GET
     if (!isset($_GET['action']) && !isset($_GET['resource'])) {
         // HOMEPAGE
         $standings = [];
+
         $matches2 = allMatchesWithTeamsGrouped(allMatchesWithTeams($pdo));
         $teams = teamAll($pdo);
 
@@ -86,8 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 } else {
-    // Si ni POST ni GET alors rediriger à Index et Stoppé l'exécution du script
-    header('Location: ../index.php');
+    // Si ni POST ni GET alors rediriger à Index (accueil) et Stopper l'execution du script
+    header('Location: index.php');
     exit();
 }
+
 require('views/vue.php');
