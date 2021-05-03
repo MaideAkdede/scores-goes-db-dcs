@@ -1,8 +1,8 @@
 <?php
-use function Team\all as teamAll;
-use function Match\allWithTeams as allMatchesWithTeams;
-use function Match\allMatchesWithTeamsGrouped as allMatchesWithTeamsGrouped;
-use function Match\save as saveMatch;
+use function Models\Team\all as teamAll;
+use function Models\Match\allWithTeams as allMatchesWithTeams;
+use function Models\Match\allMatchesWithTeamsGrouped as allMatchesWithTeamsGrouped;
+use function Controllers\Match\store as storeMatch;
 
 require('vendor/autoload.php');
 
@@ -11,32 +11,17 @@ require('utils/dbaccess.php');
 require('utils/standings.php');
 require('models/team.php');
 require('models/match.php');
+require('controllers/match.php');
 
 $pdo = getConnection();
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Traiter les trucs en POST
     if (isset($_POST['action']) && isset($_POST['resource'])) {
-
         if ($_POST['action'] === 'store' && $_POST['resource'] === 'match') {
-
-            $matchDate = $_POST['match-date'] ?: FORMAT_DATE;
-            $homeTeam = $_POST['home-team'];
-            $awayTeam = $_POST['away-team'];
-            $homeTeamGoals = $_POST['home-team-goals'] ?: "0";
-            $awayTeamGoals = $_POST['away-team-goals'] ?: "0";
-
-            $match = [
-                'date' => $matchDate,
-                'home-team' => $homeTeam,
-                'home-team-goals' => $homeTeamGoals,
-                'away-team-goals' => $awayTeamGoals,
-                'away-team' => $awayTeam
-            ];
-            //savematch et rediriger si save
-            saveMatch($pdo, $match);
-            header('Location: index.php');
-            exit();
+            storeMatch($pdo);
         }
     }
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {

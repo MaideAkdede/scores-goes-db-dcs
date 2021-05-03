@@ -1,6 +1,6 @@
 <?php
 
-namespace Match;
+namespace Models\Match;
 
 function all(\PDO $connection): array
 {
