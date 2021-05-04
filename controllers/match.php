@@ -3,6 +3,8 @@ namespace Controllers\Match;
 
 use function Models\Match\save as saveMatch;
 
+require('models/match.php');
+
 function store(\PDO $pdo)
 {
     $matchDate = $_POST['match-date'] ?: FORMAT_DATE;

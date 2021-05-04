@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Premier League 2020</h1>
-<?php if(count($matches2)) : ?>
+<?php if(count($matches)) : ?>
 <section>
     <h2>Standings</h2>
     <table>
@@ -47,7 +47,7 @@
 
 <section>
     <h2>Matchs joués le <?= TODAY ?></h2>
-    <?php if(count($matches2)) : ?>
+    <?php if(count($matches)) : ?>
     <table>
         <thead>
         <tr>
@@ -59,7 +59,7 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($matches2 as $match): ?>
+        <?php foreach ($matches as $match): ?>
             <tr>
                 <td><?= ($match->match_date)->format('j-m-Y') ?></td>
                 <td><?= $match->home_team; ?></td>
