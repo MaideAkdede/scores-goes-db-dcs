@@ -1,7 +1,7 @@
 <?php
 namespace Controllers\Team;
 
-use function Models\Team\save as saveTeam;
+use function Models\Team\save;
 
 require('models/team.php');
 
@@ -12,7 +12,7 @@ function store(\PDO $pdo)
     //TODO : La validation
     $team = compact('name', 'slug');
 
-    saveTeam($pdo, $team);
+    save($pdo, $team);
     //saveTeam($pdo, compact('name', 'slug'));
     header('Location: index.php');
     exit();

@@ -1,13 +1,20 @@
 <?php
 namespace Controllers\Page;
 
-function dashboard(\PDO $pdo){
-    
-    $standings = [];
+use function Models\Team\all;
+use function Models\Match\allWithTeams;
+use function Models\Match\allMatchesWithTeamsGrouped;
 
-    $matches = \Models\Match\allMatchesWithTeamsGrouped(\Models\Match\allWithTeams($pdo));
-    $teams = \Models\Team\all($pdo);
-    $view = 'vue.php';
+require('models/team.php');
+require('models/match.php');
+require('utils/standings.php');
+
+function dashboard(\PDO $pdo){
+
+    $standings = [];
+    $matches = allMatchesWithTeamsGrouped(allWithTeams($pdo));
+    $teams = all($pdo);
+    $view = './views/view.php';
 
 
     foreach ($matches as $match) {

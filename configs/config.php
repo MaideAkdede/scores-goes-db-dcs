@@ -5,4 +5,4 @@ define('DB_PATH', $_SERVER['DOCUMENT_ROOT'] . '/data/scores.sqlite');
 define('TODAY', (\Carbon\Carbon::now('Europe/Brussels')->locale('fr_BE')->isoFormat('dddd D MMMM YYYY')));
 
 $data = [];
-$view = 'vue.php';
+$view = './views/view.php';
